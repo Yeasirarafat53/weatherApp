@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        .footer{
+            color: rgb(225, 240, 20);
+            text-align: center;
+            /* top: 500px; */
+            margin-top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="searchcBox" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" id="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+            <h1 id="cityName">Dhaka</h1>
+            <h3 ><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="feels" class="lead">Clouds</h1>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer">created by Yeasir Arafat</p>
+    </footer>
+
+
+    <script>
+
+        const input = document.getElementById("searchcBox");
+
+        document.getElementById("button").addEventListener('click',function(){
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=d1aadd2e708048d4b39532cd68676de8')
+        .then(response => response.json())
+
+        .then(data=>{
+            const weather = data.main;
+            const temperature = `${weather.temp}`
+            
+            document.getElementById("cityName").innerText = data.name;
+            document.getElementById("temp").innerText =Math.round(temperature-273) ;
+            
+            document.getElementById("feels").innerText  = data.weather[0].description;
+            document.getElementById('icon').setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+         })
+
+     //    .then(data=>console.log(data))
+
+     })
+    </script>
+
+</body>
+
+</html>
